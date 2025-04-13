@@ -13,6 +13,7 @@ Il est idéal pour intégrer des agents LangChain ou des chatbots avec des fonct
 - Agent simplifié utilisant `RunnableSequence` (LLM + outil)
 - Validation des entrées avec `zod`
 - Facile à intégrer dans vos assistants ou serveurs LLM
+- **Nouveau** : Support pour différents modèles LLM (OpenAI, Anthropic, Ollama)
 
 ---
 
@@ -27,9 +28,34 @@ const response = await handleMcpQuery("Peux-tu utiliser l'outil getWeather pour 
 console.log(response);
 ```
 
+**Avec configuration de LLM personnalisée :**
+
+```ts
+import { handleMcpQuery } from 'mcp-tool-agent';
+
+// Avec Anthropic Claude
+const response = await handleMcpQuery("Peux-tu utiliser l'outil getWeather pour connaître la météo à Paris ?", {
+  provider: 'anthropic',
+  modelName: 'claude-3-sonnet-20240229',
+  apiKey: 'votre-clé-api-anthropic',
+  temperature: 0.1
+});
+
+// Avec Ollama en local
+const response = await handleMcpQuery("Peux-tu utiliser l'outil getWeather pour connaître la météo à Paris ?", {
+  provider: 'ollama',
+  modelName: 'llama3',
+  baseUrl: 'http://localhost:11434/v1',
+  temperature: 0
+});
+
+console.log(response);
+```
+
 Ce code :
 
 - détecte les outils MCP disponibles
+- utilise le LLM spécifié (ou GPT-4 par défaut)
 - sélectionne le bon outil via le raisonnement du LLM
 - exécute l'outil et formate la réponse
 
@@ -42,7 +68,10 @@ Ce code :
   ```bash
   npm install -g @modelcontextprotocol/cli
   ```
-- Accès à une API OpenAI (clé API requise pour GPT-4 via LangChain)
+- Accès à une API du LLM choisi :
+  - OpenAI (par défaut)
+  - Anthropic (pour Claude)
+  - Ollama (pour les modèles en local)
 
 ---
 
@@ -64,6 +93,8 @@ const run = async () => {
 
 run();
 ```
+
+Consultez le dossier `examples` pour des exemples de configurations avec différents LLMs.
 
 ---
 
@@ -97,3 +128,5 @@ MIT © mtetaud
 - 🌐 Site MCP : [modelcontextprotocol.io](https://modelcontextprotocol.io)
 - 📦 LangChain : [langchainjs.dev](https://www.langchainjs.dev)
 - 💬 GPT via LangChain : [`@langchain/openai`](https://www.npmjs.com/package/@langchain/openai)
+- 🤖 Claude via LangChain : [`@langchain/anthropic`](https://www.npmjs.com/package/@langchain/anthropic)
+- 🦙 Ollama : [ollama.ai](https://ollama.ai)

@@ -29,9 +29,10 @@
   },
   "homepage": "https://github.com/mtetaud/mcp-tool-agent#readme",
   "dependencies": {
-    "@modelcontextprotocol/sdk": "1.9.0",
-    "@langchain/openai": "0.5.5",
+    "@langchain/anthropic": "^0.3.17",
     "@langchain/core": "0.3.44",
+    "@langchain/openai": "0.5.5",
+    "@modelcontextprotocol/sdk": "1.9.0",
     "zod": "3.24.2"
   },
   "devDependencies": {

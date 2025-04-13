@@ -1,9 +1,11 @@
 import {z} from 'zod';
 import {DynamicStructuredTool} from '@langchain/core/tools';
-import {ChatOpenAI} from '@langchain/openai';
 import {RunnableSequence} from '@langchain/core/runnables';
+import {BaseChatModel} from '@langchain/core/language_models/chat_models';
+import {LLMConfig} from './types/llm-config.js';
+import {createLLMFromConfig, getDefaultLLMConfig} from './utils/llm-factory.js';
 
-export async function handleMcpQuery(userQuery: string): Promise<string> {
+export async function handleMcpQuery(userQuery: string, llmConfig?: LLMConfig): Promise<string> {
     try {
         // Dynamically import the SDK components
         const {Client} = await import('@modelcontextprotocol/sdk/client/index.js');
@@ -88,11 +90,9 @@ export async function handleMcpQuery(userQuery: string): Promise<string> {
             });
         });
 
-        // Initialize the language model
-        const llm = new ChatOpenAI({
-            modelName: 'gpt-4',
-            temperature: 0,
-        });
+        // Initialize the language model using config or default
+        const config = llmConfig || getDefaultLLMConfig();
+        const llm = createLLMFromConfig(config);
 
         // Since AgentExecutor isn't available as expected, let's create a simple agent using RunnableSequence
         const chain = RunnableSequence.from([
@@ -181,3 +181,7 @@ For more information, visit: https://modelcontextprotocol.io/`;
         return `Error processing your query: ${errorMsg}`;
     }
 }
+
+// Export LLM configuration types and utilities
+export * from './types/llm-config.js';
+export { createLLMFromConfig, getDefaultLLMConfig } from './utils/llm-factory.js';
