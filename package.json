@@ -1,0 +1,43 @@
+{
+  "name": "mcp-tool-agent",
+  "version": "1.0.0",
+  "description": "This plugin allows functions to be executed via an external agent, and can be integrated into chatbots.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "node test.js"
+  },
+  "keywords": [
+    "mcp",
+    "agent",
+    "tool-caller",
+    "chatbot",
+    "plugin",
+    "langchain",
+    "external-agent"
+  ],
+  "author": "mtetaud",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mtetaud/mcp-tool-agent.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mtetaud/mcp-tool-agent/issues"
+  },
+  "homepage": "https://github.com/mtetaud/mcp-tool-agent#readme",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.9.0",
+    "@langchain/openai": "0.5.5",
+    "@langchain/core": "0.3.44",
+    "zod": "3.24.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
